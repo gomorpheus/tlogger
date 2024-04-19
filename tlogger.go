@@ -12,7 +12,7 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Our new website is in development. Please check back soon!"))
+	w.Write([]byte("OK"))
 }
 
 func writeLog(log string) error {
@@ -38,6 +38,8 @@ func middleware(h http.Handler) http.Handler {
 				log.Println("error writing log entry:", err)
 			}
 			log.Println(l)
+			log.Println("---------")
+			log.Printf("%+v\n\n", r)
 		}
 		h.ServeHTTP(w, r)
 	})
@@ -50,14 +52,14 @@ func main() {
 	mux.PathPrefix("/").HandlerFunc(handler).Methods("GET")
 
 	srv := &http.Server{
-		Addr:         ":HTTP",
+		Addr:         ":9090",
 		Handler:      middleware(mux),
 		ReadTimeout:  3 * time.Second,
 		WriteTimeout: 5 * time.Second,
 	}
 
 	// start server
-	log.Println("Starting tlogger server listening on port 80")
+	log.Println("Starting tlogger server listening on port 9090")
 	err := srv.ListenAndServe()
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)

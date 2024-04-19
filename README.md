@@ -1,5 +1,4 @@
-# tlogger - traffic logger
+# tlogger
 
-Simple server which listens on port 80 and logs details of the domain and request.
-
-Used to interogate traffic on some expired domains I purchased.
+Simple server which listens on port 9090 so the request can be inspected.
+Used in debugging requests routed via a proxy.
